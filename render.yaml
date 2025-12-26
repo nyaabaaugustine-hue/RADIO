@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: radio-icecast
+    env: docker
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    healthCheckPath: /status.xsl
