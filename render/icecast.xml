@@ -1,0 +1,40 @@
+<icecast>
+  <location>Render</location>
+  <admin>admin@example.com</admin>
+  <authentication>
+    <source-password>S0urce_Auth_2025_XyZ9ZB</source-password>
+    <admin-user>admin</admin-user>
+    <admin-password>Adm1n_PoWer_2025_KLm88</admin-password>
+    <relay-password>R3lay_Pass_2025_QpW77</relay-password>
+  </authentication>
+  <limits>
+    <clients>256</clients>
+    <sources>4</sources>
+    <queue-size>102400</queue-size>
+    <client-timeout>30</client-timeout>
+    <header-timeout>15</header-timeout>
+    <source-timeout>10</source-timeout>
+    <burst-size>65536</burst-size>
+  </limits>
+  <listen-socket>
+    <port>8000</port>
+    <bind-address>127.0.0.1</bind-address>
+  </listen-socket>
+  <fileserve>1</fileserve>
+  <paths>
+    <basedir>/usr/share/icecast2</basedir>
+    <logdir>/var/log/icecast2</logdir>
+    <webroot>/usr/share/icecast2/web</webroot>
+    <adminroot>/usr/share/icecast2/admin</adminroot>
+    <alias source="/" dest="/status.xsl"/>
+  </paths>
+  <logging>
+    <accesslog>access.log</accesslog>
+    <errorlog>error.log</errorlog>
+    <loglevel>3</loglevel>
+    <logsize>10000</logsize>
+  </logging>
+  <security>
+    <chroot>0</chroot>
+  </security>
+</icecast>
