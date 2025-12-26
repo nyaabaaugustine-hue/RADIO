@@ -30,5 +30,12 @@ sed -i "s|<admin-user>.*</admin-user>|<admin-user>${ADMIN_USER}</admin-user>|" /
 sed -i "s|<admin-password>.*</admin-password>|<admin-password>${ADMIN_PASSWORD}</admin-password>|" /app/icecast.runtime.xml
 sed -i "s|<relay-password>.*</relay-password>|<relay-password>${RELAY_PASSWORD}</relay-password>|" /app/icecast.runtime.xml
 sed -i "s|<admin>.*</admin>|<admin>${ADMIN_EMAIL}</admin>|" /app/icecast.runtime.xml
+HOSTNAME_VAL="${ICECAST_HOSTNAME:-${RENDER_EXTERNAL_URL:-}}"
+if [ -n "$HOSTNAME_VAL" ]; then
+  HOSTNAME_VAL="${HOSTNAME_VAL#http://}"
+  HOSTNAME_VAL="${HOSTNAME_VAL#https://}"
+  HOSTNAME_VAL="${HOSTNAME_VAL%%/*}"
+  sed -i "s|<hostname>.*</hostname>|<hostname>${HOSTNAME_VAL}</hostname>|" /app/icecast.runtime.xml
+fi
 
-exec icecast2 -c /app/icecast.runtime.xml -b
+exec icecast2 -c /app/icecast.runtime.xml

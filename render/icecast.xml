@@ -1,6 +1,7 @@
 <icecast>
   <location>Render</location>
   <admin>admin@example.com</admin>
+  <hostname>localhost</hostname>
   <authentication>
     <source-password>S0urce_Auth_2025_XyZ9ZB</source-password>
     <admin-user>admin</admin-user>
