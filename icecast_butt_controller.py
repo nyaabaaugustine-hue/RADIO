@@ -5,6 +5,7 @@ import requests
 import webbrowser
 import threading
 import socket
+import os
 from flask import Flask, request, jsonify
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout,
@@ -72,9 +73,30 @@ class IcecastButtController(QWidget):
         self.config_file = "config.json"
         self.host = "localhost"
         self.port = 8000
+        self.butt_path = self.detect_butt_path()
 
         self.init_ui()
         self.load_settings()
+
+    def detect_butt_path(self):
+        # Check PATH
+        import shutil
+        path = shutil.which("butt")
+        if path:
+            return path
+        
+        # Check common locations
+        common_paths = [
+            r"C:\Program Files (x86)\butt\butt.exe",
+            r"C:\Program Files\butt\butt.exe",
+            os.path.expanduser(r"~\AppData\Local\butt\butt.exe")
+        ]
+        for p in common_paths:
+            if os.path.exists(p):
+                return p
+        
+        return "butt" # Default fallback
+
 
     def init_ui(self):
         main_layout = QVBoxLayout()
@@ -100,6 +122,7 @@ class IcecastButtController(QWidget):
         self.host_input = QLineEdit(self.host)
         self.port_input = QLineEdit(str(self.port))
         self.port_input.setValidator(None)
+        self.butt_path_input = QLineEdit(self.butt_path)
 
         connection_auth_layout.addRow("Admin User:", self.admin_user_input)
         connection_auth_layout.addRow("Admin Password:", self.admin_password_input)
@@ -107,6 +130,7 @@ class IcecastButtController(QWidget):
         connection_auth_layout.addRow("Relay Password (Optional):", self.relay_password_input)
         connection_auth_layout.addRow("Host:", self.host_input)
         connection_auth_layout.addRow("Port:", self.port_input)
+        connection_auth_layout.addRow("BUTT Path:", self.butt_path_input)
 
         self.test_connection_button = QPushButton("Test Connection")
         self.test_connection_button.clicked.connect(self.test_icecast_connection)
@@ -296,8 +320,9 @@ class IcecastButtController(QWidget):
 
         # Construct BUTT command. Assuming 'butt.exe' is in the system's PATH or current directory.
         # You might need to provide the full path to butt.exe if it's not.
+        butt_exe = self.butt_path_input.text().strip()
         butt_command = [
-            "butt",
+            butt_exe,
             "-s", source_password,
             "-h", host,
             "-p", str(port),
@@ -422,6 +447,7 @@ class IcecastButtController(QWidget):
             "relay_password": self.relay_password_input.text(),
             "host": (self.host_input.text() or self.host).strip(),
             "port": (self.port_input.text() or str(self.port)).strip(),
+            "butt_path": self.butt_path_input.text(),
             "stream_title": self.stream_title_input.text(),
             "stream_description": self.stream_description_input.text(),
             "stream_genre": self.stream_genre_input.text(),
@@ -447,6 +473,7 @@ class IcecastButtController(QWidget):
             self.relay_password_input.setText(settings.get("relay_password", ""))
             self.host_input.setText(settings.get("host", self.host))
             self.port_input.setText(settings.get("port", str(self.port)))
+            self.butt_path_input.setText(settings.get("butt_path", self.detect_butt_path()))
             self.stream_title_input.setText(settings.get("stream_title", "My Awesome Stream"))
             self.stream_description_input.setText(settings.get("stream_description", "A fantastic audio experience"))
             self.stream_genre_input.setText(settings.get("stream_genre", "Various"))

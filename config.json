@@ -1,3 +1,16 @@
 {
-    "test_key": "new_value"
+    "admin_user": "admin",
+    "admin_password": "654123a",
+    "source_password": "S0urce_Auth_2025_XyZ9ZB",
+    "relay_password": "",
+    "host": "radio-716z.onrender.com",
+    "port": "80",
+    "butt_path": "C:\\Users\\TGNE\\AppData\\Local\\butt\\butt.exe",
+    "stream_title": "My Render Radio",
+    "stream_description": "Streaming live from Trae",
+    "stream_genre": "Live",
+    "bitrate": "128",
+    "channels": "2",
+    "samplerate": "44100",
+    "mountpoint": "/live"
 }
