@@ -2,6 +2,10 @@
   <location>Render</location>
   <admin>admin@example.com</admin>
   <hostname>localhost</hostname>
+  <changeowner>
+    <user>icecast2</user>
+    <group>icecast</group>
+  </changeowner>
   <authentication>
     <source-password>S0urce_Auth_2025_XyZ9ZB</source-password>
     <admin-user>admin</admin-user>
@@ -19,7 +23,7 @@
   </limits>
   <listen-socket>
     <port>8000</port>
-    <bind-address>127.0.0.1</bind-address>
+    <bind-address>0.0.0.0</bind-address>
   </listen-socket>
   <fileserve>1</fileserve>
   <paths>
@@ -27,6 +31,7 @@
     <logdir>/var/log/icecast2</logdir>
     <webroot>/usr/share/icecast2/web</webroot>
     <adminroot>/usr/share/icecast2/admin</adminroot>
+    <mimetypes>/etc/mime.types</mimetypes>
     <alias source="/" dest="/status.xsl"/>
   </paths>
   <logging>
@@ -38,4 +43,8 @@
   <security>
     <chroot>0</chroot>
   </security>
+  <mount>
+    <mount-name>/live</mount-name>
+    <public>1</public>
+  </mount>
 </icecast>
