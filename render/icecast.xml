@@ -33,6 +33,8 @@
     <adminroot>/usr/share/icecast2/admin</adminroot>
     <mimetypes>/etc/mime.types</mimetypes>
     <alias source="/" dest="/index.html"/>
+    <alias source="/live.mp3" dest="/live"/>
+    <alias source="/stream" dest="/live"/>
   </paths>
   <logging>
     <accesslog>access.log</accesslog>
