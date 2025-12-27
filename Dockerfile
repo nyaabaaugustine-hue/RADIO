@@ -6,10 +6,9 @@ WORKDIR /app
 COPY render/icecast.xml /app/icecast.xml
 COPY render/start.sh /app/start.sh
 RUN chmod +x /app/start.sh && mkdir -p /var/log/icecast2 /usr/share/icecast2/web /usr/share/icecast2/admin
-# Create unprivileged user and group for Icecast, and fix ownership
-RUN groupadd -r icecast && useradd -r -g icecast -s /usr/sbin/nologin icecast2 \
-  && mkdir -p /usr/share/icecast2 \
-  && chown -R icecast2:icecast /var/log/icecast2 /usr/share/icecast2
+RUN id -u icecast2 >/dev/null 2>&1 || useradd -r -g icecast -s /usr/sbin/nologin icecast2 \
+  && mkdir -p /usr/share/icecast2 /var/log/icecast2 /usr/share/icecast2/web /usr/share/icecast2/admin \
+  && chown -R icecast2:icecast /var/log/icecast2 /usr/share/icecast2 /app
 USER icecast2
 EXPOSE 8000
 CMD ["/app/start.sh"]
