@@ -2,7 +2,9 @@
 set -eu
 PORT="${PORT:-8000}"
 cp /app/icecast.xml /app/icecast.runtime.xml
-sed -i "s|<port>8000</port>|<port>${PORT}</port>|" /app/icecast.runtime.xml
+# Normalize listen-socket port to Render's assigned $PORT (replace any value)
+sed -i "s|<port>[^<]*</port>|<port>${PORT}</port>|" /app/icecast.runtime.xml
+# Ensure public binding
 sed -i "s|<bind-address>127.0.0.1</bind-address>|<bind-address>0.0.0.0</bind-address>|" /app/icecast.runtime.xml
 HOSTNAME_VAL="${ICECAST_HOSTNAME:-${RENDER_EXTERNAL_URL:-}}"
 if [ -n "${HOSTNAME_VAL}" ]; then
