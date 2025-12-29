@@ -2,6 +2,11 @@ services:
   - type: web
     name: radio-icecast
     env: docker
-    dockerfilePath: Dockerfile
+    dockerfilePath: render/Dockerfile
     autoDeploy: true
     healthCheckPath: /status.xsl
+  - type: web
+    name: python-server
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:10000 server:server"
