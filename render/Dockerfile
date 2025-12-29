@@ -1,3 +1,4 @@
+# Force rebuild
 FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PORT=8000
@@ -11,4 +12,4 @@ RUN id -u icecast2 >/dev/null 2>&1 || useradd -r -g icecast -s /usr/sbin/nologin
   && chown -R icecast2:icecast /var/log/icecast2 /usr/share/icecast2 /app
 USER icecast2
 EXPOSE 8000
-CMD ["/bin/bash", "-c", "exec icecast2 -c /app/icecast.xml"]
+CMD ["icecast2", "-c", "/app/icecast.xml"]
