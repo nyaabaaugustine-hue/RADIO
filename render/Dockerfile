@@ -12,4 +12,4 @@ RUN id -u icecast2 >/dev/null 2>&1 || useradd -r -g icecast -s /usr/sbin/nologin
   && chown -R icecast2:icecast /var/log/icecast2 /usr/share/icecast2 /app
 USER icecast2
 EXPOSE 8000
-CMD ["/app/start.sh"]
+CMD ["/bin/bash", "/app/start.sh"]
