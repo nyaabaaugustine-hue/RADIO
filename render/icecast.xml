@@ -16,14 +16,16 @@
     <clients>256</clients>
     <sources>4</sources>
     <queue-size>102400</queue-size>
-    <client-timeout>30</client-timeout>
-    <header-timeout>15</header-timeout>
-    <source-timeout>10</source-timeout>
+    <client-timeout>60</client-timeout>
+    <header-timeout>30</header-timeout>
+    <source-timeout>30</source-timeout>
     <burst-size>65536</burst-size>
   </limits>
   <listen-socket>
     <port>8000</port>
     <bind-address>0.0.0.0</bind-address>
+    <shoutcast-mode>1</shoutcast-mode>
+    <shoutcast-mount>/live</shoutcast-mount>
   </listen-socket>
   <fileserve>1</fileserve>
   <paths>
