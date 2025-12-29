@@ -74,7 +74,7 @@
         <h1>Radio 716Z Live</h1>
         <div class="status">● On Air</div>
         
-        <audio controls autoplay>
+        <audio controls>
             <source src="/live" type="audio/mpeg">
             <source src="/live.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
@@ -89,5 +89,42 @@
     <footer>
         &copy; 2025 Radio 716Z
     </footer>
+    <script>
+        const statusEl = document.querySelector('.status');
+        const audioEl = document.querySelector('audio');
+        const setStatus = (label, bg, fg) => {
+            statusEl.textContent = label;
+            statusEl.style.backgroundColor = bg;
+            statusEl.style.color = fg;
+        };
+        const checkStatus = async () => {
+            try {
+                const r = await fetch('/status-json.xsl', { cache: 'no-store' });
+                if (!r.ok) { setStatus('● Offline', '#ffeaea', '#c62828'); return; }
+                const data = await r.json();
+                const src = (data.icestats || {}).source;
+                let active = false;
+                if (Array.isArray(src)) {
+                    active = src.some(s => (s.listenurl || '').endsWith('/live'));
+                } else if (src && typeof src === 'object') {
+                    active = (src.listenurl || '').endsWith('/live');
+                }
+                if (active) {
+                    setStatus('● On Air', '#e1f5fe', '#0288d1');
+                    try {
+                        audioEl.load();
+                        await audioEl.play();
+                    } catch (_) {}
+                } else {
+                    setStatus('● Off Air', '#fff3cd', '#8a6d3b');
+                }
+            } catch (_) {
+                setStatus('● Offline', '#ffeaea', '#c62828');
+            }
+        };
+        audioEl.addEventListener('error', () => setStatus('● Off Air', '#fff3cd', '#8a6d3b'));
+        checkStatus();
+        setInterval(checkStatus, 5000);
+    </script>
 </body>
 </html>

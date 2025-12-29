@@ -20,4 +20,4 @@ fi
 if [ -n "${ICECAST_ADMIN_PASSWORD:-}" ]; then
   sed -i "s|<admin-password>.*</admin-password>|<admin-password>${ICECAST_ADMIN_PASSWORD}</admin-password>|" /app/icecast.runtime.xml
 fi
-exec icecast2 -c /app/icecast.runtime.xml
+exec icecast2 -n -c /app/icecast.runtime.xml
