@@ -6,7 +6,27 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return jsonify({"ok": True, "routes": ["/settings"]})
+    return """
+    <html>
+        <head>
+            <title>Radio Controller</title>
+            <style>
+                body { font-family: sans-serif; text-align: center; padding: 50px; }
+                .box { border: 1px solid #ccc; padding: 20px; border-radius: 8px; max-width: 500px; margin: 0 auto; }
+                code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+            </style>
+        </head>
+        <body>
+            <div class="box">
+                <h1>Radio Controller Active</h1>
+                <p>This is the <strong>Control API</strong> service.</p>
+                <p>To listen to the radio or view the player, please visit your <strong>Icecast Service URL</strong>.</p>
+                <p>Status: <span style="color: green;">OK</span></p>
+                <p><small>API Endpoint: <code>/settings</code></small></p>
+            </div>
+        </body>
+    </html>
+    """
 
 SETTINGS_HOST = '127.0.0.1'
 
