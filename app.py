@@ -2,9 +2,9 @@ import json
 import socket
 from flask import Flask, request, jsonify
 
-server = Flask(__name__)
+app = Flask(__name__)
 
-@server.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
     return jsonify({"ok": True, "routes": ["/settings"]})
 
@@ -24,7 +24,7 @@ def find_free_port(start=8001, tries=20):
 
 SETTINGS_PORT = find_free_port()
 
-@server.route('/settings', methods=['GET', 'POST'])
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
     config_file = "config.json"
     if request.method == 'GET':
@@ -46,4 +46,4 @@ def settings():
             return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    server.run(host=SETTINGS_HOST, port=SETTINGS_PORT, debug=False)
+    app.run(host=SETTINGS_HOST, port=SETTINGS_PORT, debug=False)

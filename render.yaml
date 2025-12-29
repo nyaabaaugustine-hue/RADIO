@@ -9,4 +9,4 @@ services:
     name: python-server
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn --bind 0.0.0.0:10000 server:server"
+    startCommand: "gunicorn --bind 0.0.0.0:10000 app:app"
